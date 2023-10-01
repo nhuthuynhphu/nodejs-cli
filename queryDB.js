@@ -5,9 +5,8 @@ export default async function queryDB(externalFunction) {
     let info = [];
 
     if (fs.existsSync('db.json')) {
-      await fs.readFile('db.json', function (err, data) {
+      await fs.readFile('db.json', async function (err, data) {
         info = JSON.parse(data.toString());
-        console.log(info);
 
         if (err) {
           console.log(err);
@@ -15,13 +14,14 @@ export default async function queryDB(externalFunction) {
         }
 
         if (externalFunction && !err) {
-          externalFunction(info);
+          await externalFunction(info);
           return;
         }
+        console.log(info);
       });
     } else {
       if (externalFunction) {
-        externalFunction(info);
+        await externalFunction(info);
         return;
       }
     }

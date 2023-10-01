@@ -1,3 +1,3 @@
 import queryDB from './queryDB.js';
 
-queryDB();
+export default async () => queryDB();
